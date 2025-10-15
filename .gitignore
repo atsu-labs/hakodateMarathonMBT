@@ -11,7 +11,8 @@ dist-ssr/
 *.local
 .output/
 .vercel/
-backend/public/
+backend/public/*
+!backend/public/.gitkeep
 
 # Environment files
 .env
