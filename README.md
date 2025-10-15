@@ -1,104 +1,104 @@
 # hakodateMarathonMBT
 
-A Single Page Application (SPA) built with Vite + Vue (frontend) and Hono (backend), deployable to Cloudflare Workers with D1 database.
+Vite + Vue（フロントエンド）とHono（バックエンド）で構築されたシングルページアプリケーション（SPA）です。Cloudflare WorkersとD1データベースにデプロイ可能です。
 
-## Project Structure
+## プロジェクト構造
 
 ```
 .
-├── frontend/          # Vite + Vue frontend
+├── frontend/          # Vite + Vue フロントエンド
 │   ├── src/
 │   │   ├── components/
 │   │   ├── App.vue
 │   │   └── main.js
 │   ├── index.html
 │   └── vite.config.js
-├── backend/           # Hono backend for Cloudflare Workers
+├── backend/           # Cloudflare Workers用Honoバックエンド
 │   ├── src/
 │   │   └── index.js
 │   ├── database/
 │   │   └── schema.sql
-│   ├── public/        # Built frontend files (generated)
+│   ├── public/        # ビルドされたフロントエンドファイル（生成されます）
 │   └── wrangler.toml
-└── package.json       # Root workspace configuration
+└── package.json       # ルートワークスペース設定
 ```
 
-## Setup
+## セットアップ
 
-1. Install dependencies:
+1. 依存関係をインストールします：
 ```bash
 npm install
 ```
 
-2. Create a D1 database (requires Cloudflare account):
+2. D1データベースを作成します（Cloudflareアカウントが必要です）：
 ```bash
 cd backend
 npx wrangler d1 create hakodate-marathon-db
 ```
 
-3. Update `backend/wrangler.toml` with your Cloudflare account ID and D1 database ID from the previous step.
+3. 前のステップで取得したCloudflareアカウントIDとD1データベースIDを`backend/wrangler.toml`に設定します。
 
-4. Initialize the database with schema:
+4. データベーススキーマを初期化します：
 ```bash
 cd backend
 npx wrangler d1 execute hakodate-marathon-db --file=./database/schema.sql
 ```
 
-## Development
+## 開発
 
-### Run backend development server (includes frontend proxy):
+### バックエンド開発サーバーを実行（フロントエンドプロキシを含む）：
 ```bash
 npm run dev
 ```
 
-### Run frontend development server separately:
+### フロントエンド開発サーバーを個別に実行：
 ```bash
 npm run dev:frontend
 ```
 
-### Run backend development server separately:
+### バックエンド開発サーバーを個別に実行：
 ```bash
 npm run dev:backend
 ```
 
-The application will be available at `http://localhost:8787` (backend) or `http://localhost:5173` (frontend dev server).
+アプリケーションは`http://localhost:8787`（バックエンド）または`http://localhost:5173`（フロントエンド開発サーバー）で利用可能です。
 
-## Build
+## ビルド
 
-Build both frontend and backend:
+フロントエンドとバックエンドの両方をビルドします：
 ```bash
 npm run build
 ```
 
-This will:
-1. Build the Vue frontend with Vite
-2. Output static files to `backend/public/`
+これにより：
+1. ViteでVueフロントエンドをビルド
+2. 静的ファイルを`backend/public/`に出力
 
-## Deploy
+## デプロイ
 
-Deploy to Cloudflare Workers:
+Cloudflare Workersにデプロイします：
 ```bash
 npm run deploy
 ```
 
-This will build the frontend and deploy the entire application to Cloudflare Workers.
+これによりフロントエンドをビルドし、アプリケーション全体をCloudflare Workersにデプロイします。
 
-## Technologies Used
+## 使用技術
 
-- **Frontend**: Vite, Vue 3
-- **Backend**: Hono
-- **Database**: Cloudflare D1 (SQLite)
-- **Platform**: Cloudflare Workers
-- **Package Manager**: npm with workspaces
+- **フロントエンド**: Vite、Vue 3
+- **バックエンド**: Hono
+- **データベース**: Cloudflare D1（SQLite）
+- **プラットフォーム**: Cloudflare Workers
+- **パッケージマネージャー**: npm with workspaces
 
-## API Endpoints
+## APIエンドポイント
 
-- `GET /api/hello` - Returns a welcome message
-- `GET /api/items` - Get all items from D1 database
-- `POST /api/items` - Add a new item to D1 database (body: `{ "name": "item name" }`)
+- `GET /api/hello` - ウェルカムメッセージを返します
+- `GET /api/items` - D1データベースから全てのアイテムを取得します
+- `POST /api/items` - D1データベースに新しいアイテムを追加します（ボディ: `{ "name": "item name" }`）
 
-## Notes
+## 注意事項
 
-- The frontend is served as static files from the `backend/public/` directory
-- The backend handles both API routes (`/api/*`) and serves the SPA
-- D1 database binding is configured in `wrangler.toml`
+- フロントエンドは`backend/public/`ディレクトリから静的ファイルとして提供されます
+- バックエンドはAPIルート（`/api/*`）とSPAの両方を処理します
+- D1データベースバインディングは`wrangler.toml`で設定されます
