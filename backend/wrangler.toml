@@ -1,0 +1,17 @@
+name = "hakodate-marathon-mbt"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+# Cloudflare Workers configuration
+account_id = "" # Add your Cloudflare account ID here
+workers_dev = true
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "hakodate-marathon-db"
+database_id = "" # Add your D1 database ID here after creating it
+
+# Assets configuration
+[site]
+bucket = "./public"
