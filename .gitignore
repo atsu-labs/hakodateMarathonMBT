@@ -11,6 +11,7 @@ dist-ssr/
 *.local
 .output/
 .vercel/
+backend/public/
 
 # Environment files
 .env
