@@ -7,7 +7,7 @@
     "dev": "wrangler dev",
     "deploy": "npm run build:frontend && wrangler deploy",
     "build": "echo 'No build step needed for Hono'",
-    "build:frontend": "npm run build --workspace=frontend"
+    "build:frontend": "npm run build --workspace=frontend-admin && npm run build --workspace=frontend-mobile"
   },
   "dependencies": {
     "hono": "^4.2.0"
