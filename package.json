@@ -17,5 +17,8 @@
     "dev:backend": "npm run dev --workspace=backend",
     "build": "npm run build --workspace=frontend-admin && npm run build --workspace=frontend-mobile && npm run build --workspace=backend",
     "deploy": "npm run deploy --workspace=backend"
+  },
+  "devDependencies": {
+    "wrangler": "^4.43.0"
   }
 }

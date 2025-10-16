@@ -10,7 +10,7 @@ workers_dev = true
 [[d1_databases]]
 binding = "DB"
 database_name = "hakodate-marathon-db"
-database_id = "" # Add your D1 database ID here after creating it
+database_id = "080c82dd-0331-4c84-aad4-8b7335b2410d" # Add your D1 database ID here after creating it
 
 # Assets configuration
 [site]
