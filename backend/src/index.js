@@ -30,12 +30,9 @@ app.post('/api/items', async (c) => {
 })
 
 // Serve static files from public directory
-// Admin SPA is served from /admin/* paths
-// Mobile SPA is served from root /* paths
 app.use('/*', serveStatic({ root: './' }))
 
-// Fallback to appropriate index.html for SPA routing
-app.get('/admin/*', serveStatic({ path: './admin/index.html' }))
-app.get('*', serveStatic({ path: './mobile/index.html' }))
+// Fallback to index.html for SPA routing
+app.get('*', serveStatic({ path: './index.html' }))
 
 export default app

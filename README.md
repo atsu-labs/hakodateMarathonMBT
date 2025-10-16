@@ -1,50 +1,24 @@
 # hakodateMarathonMBT
 
-Vite + Vue（フロントエンド）とHono（バックエンド）で構築された、2つの独立したシングルページアプリケーション（SPA）です。PC用の管理ページとモバイル閲覧用ページを提供します。Cloudflare WorkersとD1データベースにデプロイ可能です。
-
-## アプリケーション構成
-
-### PC管理ページ（/admin）
-- ダッシュボード
-- アイテム管理機能
-- デスクトップ向けUI
-
-### モバイル閲覧ページ（/）
-- ホーム画面
-- アイテム一覧
-- モバイル最適化UI
+Vite + Vue（フロントエンド）とHono（バックエンド）で構築されたシングルページアプリケーション（SPA）です。Cloudflare WorkersとD1データベースにデプロイ可能です。
 
 ## プロジェクト構造
 
 ```
 .
-├── frontend-admin/    # PC管理用SPA（Vue + Vite）
+├── frontend/          # Vite + Vue フロントエンド
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Dashboard.vue
-│   │   │   └── ItemManagement.vue
 │   │   ├── App.vue
 │   │   └── main.js
 │   ├── index.html
 │   └── vite.config.js
-├── frontend-mobile/   # モバイル閲覧用SPA（Vue + Vite）
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Home.vue
-│   │   │   └── ItemList.vue
-│   │   ├── App.vue
-│   │   └── main.js
-│   ├── index.html
-│   └── vite.config.js
-├── frontend/          # 旧フロントエンド（後方互換性のため保持）
 ├── backend/           # Cloudflare Workers用Honoバックエンド
 │   ├── src/
 │   │   └── index.js
 │   ├── database/
 │   │   └── schema.sql
 │   ├── public/        # ビルドされたフロントエンドファイル（生成されます）
-│   │   ├── admin/     # PC管理ページ
-│   │   └── mobile/    # モバイル閲覧ページ
 │   └── wrangler.toml
 └── package.json       # ルートワークスペース設定
 ```
@@ -72,43 +46,33 @@ npx wrangler d1 execute hakodate-marathon-db --file=./database/schema.sql
 
 ## 開発
 
-### 推奨: バックエンド開発サーバーを実行
+### バックエンド開発サーバーを実行（フロントエンドプロキシを含む）：
 ```bash
-# フロントエンドをビルドしてから実行
-npm run build
 npm run dev
 ```
 
-バックエンドが起動したら：
-- PC管理ページ: `http://localhost:8787/admin`
-- モバイル閲覧ページ: `http://localhost:8787/`
-
-### フロントエンド開発サーバーを個別に実行
-
-#### PC管理ページの開発：
+### フロントエンド開発サーバーを個別に実行：
 ```bash
-npm run dev:admin
+npm run dev:frontend
 ```
-`http://localhost:5173`でアクセス可能
 
-#### モバイル閲覧ページの開発：
+### バックエンド開発サーバーを個別に実行：
 ```bash
-npm run dev:mobile
+npm run dev:backend
 ```
-`http://localhost:5173`でアクセス可能
 
-> **注意**: フロントエンドを個別に実行する場合、APIリクエストのため、別ターミナルでバックエンドも起動する必要があります。
+アプリケーションは`http://localhost:8787`（バックエンド）または`http://localhost:5173`（フロントエンド開発サーバー）で利用可能です。
 
 ## ビルド
 
-両方のフロントエンド（管理用とモバイル用）をビルドします：
+フロントエンドとバックエンドの両方をビルドします：
 ```bash
 npm run build
 ```
 
 これにより：
-1. ViteでPC管理用Vueフロントエンドをビルド → `backend/public/admin/`
-2. ViteでモバイルVueフロントエンドをビルド → `backend/public/mobile/`
+1. ViteでVueフロントエンドをビルド
+2. 静的ファイルを`backend/public/`に出力
 
 ## デプロイ
 
@@ -121,7 +85,7 @@ npm run deploy
 
 ## 使用技術
 
-- **フロントエンド**: Vite、Vue 3、Vue Router
+- **フロントエンド**: Vite、Vue 3
 - **バックエンド**: Hono
 - **データベース**: Cloudflare D1（SQLite）
 - **プラットフォーム**: Cloudflare Workers
@@ -135,8 +99,6 @@ npm run deploy
 
 ## 注意事項
 
-- PC管理ページは`/admin`パスから、モバイルページはルート`/`から提供されます
-- フロントエンドは`backend/public/admin/`と`backend/public/mobile/`ディレクトリから静的ファイルとして提供されます
-- バックエンドはAPIルート（`/api/*`）と両方のSPAを処理します
+- フロントエンドは`backend/public/`ディレクトリから静的ファイルとして提供されます
+- バックエンドはAPIルート（`/api/*`）とSPAの両方を処理します
 - D1データベースバインディングは`wrangler.toml`で設定されます
-- 各SPAは独立したVue Routerインスタンスを持ち、異なるベースパスで動作します
