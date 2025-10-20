@@ -4,18 +4,17 @@
   "version": "1.0.0",
   "type": "module",
   "workspaces": [
-    "frontend",
+    "backend",
     "frontend-admin",
-    "frontend-mobile",
-    "backend"
+    "frontend-mobile"
   ],
   "scripts": {
     "dev": "npm run dev --workspace=backend",
-    "dev:frontend": "npm run dev --workspace=frontend",
     "dev:admin": "npm run dev --workspace=frontend-admin",
     "dev:mobile": "npm run dev --workspace=frontend-mobile",
     "dev:backend": "npm run dev --workspace=backend",
     "build": "npm run build --workspace=frontend-admin && npm run build --workspace=frontend-mobile && npm run build --workspace=backend",
+    "build:frontend": "npm run build --workspace=frontend-admin && npm run build --workspace=frontend-mobile",
     "deploy": "npm run deploy --workspace=backend"
   },
   "devDependencies": {
